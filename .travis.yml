@@ -1,12 +1,16 @@
 language: python
 sudo: false
 python:
+  - "2.6"
+  - "2.7"
+  - "3.2"
+  - "3.3"
   - "3.4"
   - "3.5"
 install:
   - pip install -r requirements.txt
   - pip install coveralls
 script: 
-  nosetests --with-coverage
+  nosetests --with-coverage --cover-package=machikoro tests
 after_success:
   coveralls
