@@ -5,50 +5,60 @@ from .constant import CardExpansion, CardType, CardSymbol
 from .effect import *
 
 class Card(Enum):
-    WHEAT_FIELD = (CardExpansion.BASE, CardType.PRIMARY_INDUSTRY,
-                   CardSymbol.GRAIN, 1, [1], general_income, {"base": 1})
-    RANCH = (CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.ANIMAL,
-             1, [2], general_income, {"base": 1})
-    FOREST = (CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.GEAR,
-              3, [5], general_income, {"base": 1})
-    MINE = (CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.GEAR, 6,
-            [9], general_income, {"base": 5})
-    APPLE_ORCHARD = (CardExpansion.BASE, CardType.PRIMARY_INDUSTRY,
-                     CardSymbol.GRAIN, 3, [10], general_income, {"base": 3})
-    BAKERY = (CardExpansion.BASE, CardType.SECONDARY_INDUSTRY, CardSymbol.SHOP,
-              1, [2, 3], general_income, {"base": 1})
-    CONVENIENCE_STORE = (CardExpansion.BASE, CardType.SECONDARY_INDUSTRY,
-                         CardSymbol.SHOP, 2, [4], general_income, {"base": 3})
-    CHEESE_FACTORY = (CardExpansion.BASE, CardType.SECONDARY_INDUSTRY,
-                      CardSymbol.FACTORY, 5, [7], general_income,
-                      {"base": 3,
-                       "multiplier": CardSymbol.ANIMAL})
-    FURNITURE_FACTORY = (CardExpansion.BASE, CardType.SECONDARY_INDUSTRY,
-                         CardSymbol.FACTORY, 3, [8], general_income,
-                         {"base": 3,
-                          "multiplier": CardSymbol.GEAR})
+# yapf: disable
+    WHEAT_FIELD = (
+        CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.GRAIN, 1,
+        [1], general_income, {"base": 1})
+    RANCH = (
+        CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.ANIMAL, 1,
+        [2], general_income, {"base": 1})
+    FOREST = (
+        CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.GEAR, 3,
+        [5], general_income, {"base": 1})
+    MINE = (
+        CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.GEAR, 6,
+        [9], general_income, {"base": 5})
+    APPLE_ORCHARD = (
+        CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.GRAIN, 3,
+        [10], general_income, {"base": 3})
+    BAKERY = (
+        CardExpansion.BASE, CardType.SECONDARY_INDUSTRY, CardSymbol.SHOP, 1,
+        [2, 3], general_income, {"base": 1})
+    CONVENIENCE_STORE = (
+        CardExpansion.BASE, CardType.SECONDARY_INDUSTRY, CardSymbol.SHOP, 2,
+        [4], general_income, {"base": 3})
+    CHEESE_FACTORY = (
+        CardExpansion.BASE, CardType.SECONDARY_INDUSTRY, CardSymbol.FACTORY, 5,
+        [7], general_income, {"base": 3, "multiplier": CardSymbol.ANIMAL})
+    FURNITURE_FACTORY = (
+        CardExpansion.BASE, CardType.SECONDARY_INDUSTRY, CardSymbol.FACTORY, 3,
+        [8], general_income, {"base": 3, "multiplier": CardSymbol.GEAR})
     FRUIT_AND_VEGETABLE_MARKET = (
         CardExpansion.BASE, CardType.SECONDARY_INDUSTRY, CardSymbol.FRUIT, 2,
-        [11, 12], general_income, {"base": 2,
-                                   "multiplier": CardSymbol.GRAIN})
-    CAFE = (CardExpansion.BASE, CardType.RESTAURANT, CardSymbol.CUP, 2, [3],
-            general_income, {"base": 1})
-    FAMILY_RESTAURANT = (CardExpansion.BASE, CardType.RESTAURANT,
-                         CardSymbol.CUP, 3, [9, 10], general_income,
-                         {"base": 2})
-    STADIUM = (CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT,
-               CardSymbol.LANDMARK, 6, [6])
-    TV_STATION = (CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT,
-                  CardSymbol.LANDMARK, 7, [6])
-    BUSINESS_CENTRE = (CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT,
-                       CardSymbol.LANDMARK, 8, [6])
-    STATION = (CardExpansion.BASE, CardType.LANDMARK, CardSymbol.LANDMARK, 4)
-    SHOPPING_MALL = (CardExpansion.BASE, CardType.LANDMARK,
-                     CardSymbol.LANDMARK, 10)
-    AMUSEMENT_PARK = (CardExpansion.BASE, CardType.LANDMARK,
-                      CardSymbol.LANDMARK, 16)
-    RADIO_TOWER = (CardExpansion.BASE, CardType.LANDMARK, CardSymbol.LANDMARK,
-                   22)
+        [11, 12], general_income, {"base": 2, "multiplier": CardSymbol.GRAIN})
+    CAFE = (
+        CardExpansion.BASE, CardType.RESTAURANT, CardSymbol.CUP, 2,
+        [3], general_income, {"base": 1})
+    FAMILY_RESTAURANT = (
+        CardExpansion.BASE, CardType.RESTAURANT, CardSymbol.CUP, 3,
+        [9, 10], general_income, {"base": 2})
+    STADIUM = (
+        CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT, CardSymbol.LANDMARK, 6,
+        [6])
+    TV_STATION = (
+        CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT, CardSymbol.LANDMARK, 7,
+        [6])
+    BUSINESS_CENTRE = (
+        CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT, CardSymbol.LANDMARK, 8,
+        [6])
+    STATION = (
+        CardExpansion.BASE, CardType.LANDMARK, CardSymbol.LANDMARK, 4)
+    SHOPPING_MALL = (
+        CardExpansion.BASE, CardType.LANDMARK, CardSymbol.LANDMARK, 10)
+    AMUSEMENT_PARK = (
+        CardExpansion.BASE, CardType.LANDMARK, CardSymbol.LANDMARK, 16)
+    RADIO_TOWER = (
+        CardExpansion.BASE, CardType.LANDMARK, CardSymbol.LANDMARK, 22)
     FLOWER_FIELD = (CardExpansion.HARBOUR, CardType.PRIMARY_INDUSTRY,
                     CardSymbol.GRAIN, 2, [4])
     MACKEREL_FISHING_BOAT = (CardExpansion.HARBOUR, CardType.PRIMARY_INDUSTRY,
@@ -105,21 +115,22 @@ class Card(Enum):
                          CardSymbol.LANDMARK, 7, [10])
     SANTAS_WORKSHOP = (CardExpansion.PROMOTION, CardType.LANDMARK,
                        CardSymbol.LANDMARK, 0)
+# yapf: enable
 
     def __init__(self,
                  expansion,
                  type,
                  symbol,
                  cost,
-                 pip=None,
-                 income=None,
+                 activation=None,
+                 effect=None,
                  parameter=None):
         self.expansion = expansion
         self.type = type
         self.symbol = symbol
         self.cost = cost
-        self.pip = pip
-        self.income = income
+        self.activation = activation
+        self.effect = effect
         self.parameter = parameter
 
     def __eq__(self, other):
@@ -130,7 +141,7 @@ class Card(Enum):
         elif isinstance(other, CardSymbol):
             return self.symbol == other
         elif isinstance(other, int):
-            return self.pip and other in self.pip
+            return self.activation and other in self.activation
         else:
             return other is self
 
