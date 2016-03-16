@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from enum import Enum
-from constant import CardExpansion, CardType, CardSymbol
-from effect import *
+from .constant import CardExpansion, CardType, CardSymbol
+from .effect import *
 
 class Card(Enum):
     WHEAT_FIELD = (CardExpansion.BASE, CardType.PRIMARY_INDUSTRY,
