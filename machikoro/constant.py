@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-
 """
 This module contains the constants
 """
 
 from enum import Enum
+
 
 class CardExpansion(Enum):
     """Defining the Expansion"""
@@ -13,6 +13,7 @@ class CardExpansion(Enum):
     SHARP = 3
     PROMOTION = 4
 
+
 class CardType(Enum):
     """Defining the Establishment type"""
     PRIMARY_INDUSTRY = BLUE = 1
@@ -20,6 +21,7 @@ class CardType(Enum):
     RESTAURANT = RED = 3
     MAJOR_ESTABLISHMENT = PURPLE = 4
     LANDMARK = 5
+
 
 class CardSymbol(Enum):
     """Defining the Establishment symbol"""
