@@ -176,3 +176,6 @@ class Card(Enum):
             return self.activation and other in self.activation
         else:
             return other is self
+
+    def __hash__(self):
+        return hash(self._name_)
