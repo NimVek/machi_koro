@@ -1,6 +1,5 @@
 from nose.tools import *
 
-from machikoro.constant import CardType, CardSymbol, CardExpansion
 from machikoro import *
 
 
