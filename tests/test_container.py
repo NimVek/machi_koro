@@ -170,3 +170,14 @@ def test_tiles_market_add():
     market.add(Card.RADIO_TOWER)
     assert_equals(len(market.list(CardType.LANDMARK)), 2)
     assert_equals(market.count(CardType.LANDMARK), 3)
+
+
+def test_tableau_money():
+    tableau = Tableau(5)
+    assert_equals(tableau.money(), 5)
+    assert_equals(tableau.money(-3), 3)
+    assert_equals(tableau.money(), 2)
+    assert_equals(tableau.money(-4), 2)
+    assert_equals(tableau.money(), 0)
+    assert_equals(tableau.money(2), -2)
+    assert_equals(tableau.money(), 2)

@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 
 class EffectInterface(metaclass=ABCMeta):
     @abstractmethod
-    def __call__(self, card, owner, table):
+    def __call__(self, card, owner, game):
         pass
 
 
@@ -15,5 +15,5 @@ class GeneralIncome(EffectInterface):
         self.multiply = multiply
         self.required = required
 
-    def __call__(self, card, owner, table):
+    def __call__(self, card, owner, game):
         pass

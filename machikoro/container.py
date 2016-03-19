@@ -164,7 +164,7 @@ class Tableau(ContainerInterface):
     __ATTRIBUTE_COUNT = 'count'
 
     def __init__(self, money=3, cards=[Card.WHEAT_FIELD, Card.BAKERY]):
-        self.money = money
+        self._money = money
         self.cards = {}
         for card in cards:
             self.add(card)
@@ -184,3 +184,11 @@ class Tableau(ContainerInterface):
             self.cards[card][Tableau.__ATTRIBUTE_COUNT] += 1
         else:
             self.cards[card] = {Tableau.__ATTRIBUTE_COUNT: 1}
+
+    def money(self, diff=None):
+        if diff is None:
+            return self._money
+        else:
+            diff = max(diff, -self._money)
+            self._money += diff
+            return -diff
