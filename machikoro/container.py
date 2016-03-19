@@ -114,43 +114,47 @@ class TilesMarket(ContainerInterface):
     def _list(self):
         result = self.supply.list(CardType.LANDMARK)
         for _, _, tile in self.tiles:
-            result.extend(pile._list())
+            result.extend(tile._list())
         return result
 
     def _count(self, card):
         if card == CardType.LANDMARK:
             return self.supply._count(card)
         else:
-            for _, selector, tile in self.tiles:
-                if card == selector:
+            for _, _, tile in self.tiles:
+                if card in tile:
                     return tile._count(card)
 
     def _remove(self, card):
         result = None
         if card == CardType.LANDMARK:
-            result = self.supply._take(card)
+            result = self.supply._remove(card)
         else:
-            for _, selector, tile in self.tiles:
-                if card == selector:
-                    result = tile._take(card)
+            for _, _, tile in self.tiles:
+                if card in tile:
+                    result = tile._remove(card)
                     break
             self.__assure_tiles()
         return result
 
     def _add(self, card):
         if card == CardType.LANDMARK:
-            self.supply.add(card)
+            self.supply._add(card)
         else:
             for _, selector, tile in self.tiles:
-                if card == selector:
-                    tile.add(card)
+                if not selector or card == selector:
+                    tile._add(card)
                     break
 
     def __assure_tiles(self):
         remains = self.supply.list(['!', CardType.LANDMARK])
         for count_, selector, tile in self.tiles:
-            using = [card for card in remains if card == selector],
-            remains = remains - using
+            if selector:
+                using = [card for card in remains if card == selector]
+                remains = [card for card in remains if not card in using]
+            else:
+                using = remains
+                remains = []
             while using and (len(tile._list()) < count_):
                 self.add(self.supply.remove(['|'] + list(using)))
                 using = self.supply.list(['|'] + list(using))
@@ -169,14 +173,14 @@ class Tableau(ContainerInterface):
         return [card for card in self.cards if self._count(card) > 0]
 
     def _count(self, card):
-        return self.cards[card].get(__ATTRIBUTE_COUNT, 0)
+        return self.cards[card].get(Tableau.__ATTRIBUTE_COUNT, 0)
 
     def _remove(self, card):
-        self.cards[card][__ATTRIBUTE_COUNT] -= 1
+        self.cards[card][Tableau.__ATTRIBUTE_COUNT] -= 1
         return card
 
     def _add(self, card):
         if card in self.cards:
-            self.cards[card][__ATTRIBUTE_COUNT] += 1
+            self.cards[card][Tableau.__ATTRIBUTE_COUNT] += 1
         else:
-            self.cards[card] = {__ATTRIBUTE_COUNT: 1}
+            self.cards[card] = {Tableau.__ATTRIBUTE_COUNT: 1}
