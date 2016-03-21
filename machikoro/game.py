@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from .player import PlayerInterface
+from .container import Tableau
+
 
 class Game(object):
     CURRENT_PLAYER = 'current'
@@ -31,21 +34,6 @@ class Game(object):
             result = self.tableaus[result]
         return result
 
-    def _money(self, player, argument):
-        if argument is None:
-            return self.tableaus[player].money
-        else:
-            self.tableaus[player].money = argument
-
-    def money(self, player, argument=None):
-        player = self._target(player)
-        money = self._money(player)
-        if argument is None:
-            return money
-        argument = max(argument, -money)
-        self._money(player, money + argument)
-        return argument
-
     def list(self, target, argument=None):
         return self._container(target).list(argument)
 
@@ -58,6 +46,9 @@ class Game(object):
     def add(self, target, card):
         return self._container(target).add(card)
 
+    def money(self, target, difference=None):
+        return self._container(target).money(difference)
+
     def next_turn(self):
         self.dices = {}
 
@@ -65,27 +56,27 @@ class Game(object):
         self.players.append(self.players.pop(0))
         self.next_turn()
 
-    def player(self, player=Game.CURRENT_PLAYER):
-        result = self._target(target)
+    def player(self, player=CURRENT_PLAYER):
+        result = self._target(player)
         assert isinstance(result, PlayerInterface)
         return result
 
     def players(self):
         return self._players
 
-    def opponents(self, player=Game.CURRENT_PLAYER):
+    def opponents(self, player=CURRENT_PLAYER):
         player = self.player(player)
         i = self._players.index(player)
         result = self._players[i + 1:] + self._players[:i]
         return list(reversed(result))
 
-    def neighbors(self, player=Game.CURRENT_PLAYER):
+    def neighbors(self, player=CURRENT_PLAYER):
         return self.opponents(player)
 
-    def roll_dices(self, target=GAME.DICE_GAME, count=1):
+    def roll_dices(self, target=DICE_GAME, count=1):
         self.dices[target] = Game.roll(count)
 
-    def get_dices(self, target=GAME.DICE_GAME):
+    def get_dices(self, target=DICE_GAME):
         return self.dices[target]
 
     def get_pip(self, target):
