@@ -3,6 +3,8 @@
 from .player import PlayerInterface
 from .container import Tableau
 
+import random
+
 
 class Game(object):
     CURRENT_PLAYER = 'current'
@@ -49,12 +51,10 @@ class Game(object):
     def money(self, target, difference=None):
         return self._container(target).money(difference)
 
-    def next_turn(self):
+    def advance(self, next_player=False):
+        if next_player:
+            self._players.append(self._players.pop(0))
         self.dices = {}
-
-    def next_player(self):
-        self.players.append(self.players.pop(0))
-        self.next_turn()
 
     def player(self, player=CURRENT_PLAYER):
         result = self._target(player)
@@ -73,11 +73,15 @@ class Game(object):
     def neighbors(self, player=CURRENT_PLAYER):
         return self.opponents(player)
 
-    def roll_dices(self, target=DICE_GAME, count=1):
-        self.dices[target] = Game.roll(count)
+    @staticmethod
+    def __roll(count_):
+        return [random.randint(1, 6) for _ in range(count_)]
 
-    def get_dices(self, target=DICE_GAME):
+    def roll(self, target=DICE_GAME, count_=1):
+        self.dices[target] = Game.__roll(count_)
+
+    def dice(self, target=DICE_GAME):
         return self.dices[target]
 
-    def get_pip(self, target):
-        return sum(self.get_dices(target))
+    def pip(self, target=DICE_GAME):
+        return sum(self.dice(target))

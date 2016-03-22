@@ -9,6 +9,11 @@ class EffectInterface(metaclass=ABCMeta):
         pass
 
 
+class NotImplementedEffect(EffectInterface):
+    def __call__(self, card, owner, game):
+        raise NotImplementedError(card)
+
+
 class GeneralIncome(EffectInterface):
     def __init__(self, base, multiply=None, required=None):
         self.base = base

@@ -2,7 +2,7 @@
 
 from enum import Enum
 from .constant import CardExpansion, CardType, CardSymbol
-from .effect import GeneralIncome
+from .effect import NotImplementedEffect, GeneralIncome
 
 
 class Card(Enum):
@@ -148,7 +148,7 @@ class Card(Enum):
                  symbol,
                  cost,
                  activation=None,
-                 effect=None):
+                 effect=NotImplementedEffect):
         self.expansion = expansion
         self.type = type
         self.symbol = symbol
