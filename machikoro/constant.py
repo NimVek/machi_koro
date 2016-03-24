@@ -5,6 +5,8 @@ This module contains the constants
 
 from enum import Enum
 
+CURRENT_PLAYER = 'current'
+
 
 class CardExpansion(Enum):
     """Defining the Expansion"""

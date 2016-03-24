@@ -2,7 +2,7 @@
 
 from enum import Enum
 from .constant import CardExpansion, CardType, CardSymbol
-from .effect import NotImplementedEffect, GeneralIncome
+from .effect import NotImplementedEffect, GeneralIncome, StadiumEffect, TVStationEffect, BusinessCentreEffect
 
 
 class Card(Enum):
@@ -45,13 +45,13 @@ class Card(Enum):
         [9, 10], GeneralIncome(2))
     STADIUM = (
         CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT, CardSymbol.LANDMARK, 6,
-        [6])
+        [6], StadiumEffect())
     TV_STATION = (
         CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT, CardSymbol.LANDMARK, 7,
-        [6])
+        [6], TVStationEffect())
     BUSINESS_CENTRE = (
         CardExpansion.BASE, CardType.MAJOR_ESTABLISHMENT, CardSymbol.LANDMARK, 8,
-        [6])
+        [6], BusinessCentreEffect())
     STATION = (
         CardExpansion.BASE, CardType.LANDMARK, CardSymbol.LANDMARK, 4)
     SHOPPING_MALL = (
@@ -182,3 +182,7 @@ class Card(Enum):
 
     def __hash__(self):
         return hash(self._name_)
+
+    def __deepcopy__(self, memo={}):
+        memo[id(self)] = self
+        return self

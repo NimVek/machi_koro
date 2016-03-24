@@ -2,7 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 
-from .constant import CardSymbol, CardType
+from .constant import CardSymbol, CardType, CURRENT_PLAYER
 
 #from .card import Card
 import machikoro.card
@@ -26,7 +26,7 @@ class GeneralIncome(EffectInterface):
         self.required = required
 
     def __call__(self, card, owner, game):
-        if not self.required or game.list(owner, required):
+        if not self.required or game.list(owner, self.required):
             value = self.base
             if self.multiply:
                 value *= game.count(owner, self.multiply)
@@ -34,5 +34,24 @@ class GeneralIncome(EffectInterface):
                     owner, machikoro.card.Card.SHOPPING_MALL):
                 value += 1
             if card == CardType.RED:
-                value = game.money(Game.CURRENT_PLAYER, -value)
+                value = game.money(CURRENT_PLAYER, -value)
             game.money(owner, value)
+
+
+class StadiumEffect(EffectInterface):
+    def __call__(self, card, owner, game):
+        for other in game.opponents(owner):
+            game.money(owner, game.money(other, -2))
+
+
+class TVStationEffect(EffectInterface):
+    def __call__(self, card, owner, game):
+        other = owner.decide(card, game, game.opponents(owner))
+        game.money(owner, game.money(other, -5))
+
+
+class BusinessCentreEffect(EffectInterface):
+    def __call__(self, card, owner, game):
+        own_card, other, other_card = owner.decide(card, game)
+        game.add(other, game.remove(owner, own_card))
+        game.add(owner, game.remove(other, other_card))

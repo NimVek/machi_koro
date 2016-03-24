@@ -1,6 +1,7 @@
 from nose.tools import *
 
 from machikoro import *
+import copy
 
 
 def test_unlimited_supply_count():
@@ -181,3 +182,22 @@ def test_tableau_money():
     assert_equals(tableau.money(), 0)
     assert_equals(tableau.money(2), -2)
     assert_equals(tableau.money(), 2)
+
+
+def test_tableau_copy():
+    tableau = Tableau(2, [Card.WHEAT_FIELD, Card.WHEAT_FIELD])
+    assert_equals(tableau.money(), 2)
+    assert_equals(tableau.count(Card.WHEAT_FIELD), 2)
+    tableau2 = copy.deepcopy(tableau)
+    assert_equals(tableau.money(), tableau2.money())
+    assert_equals(
+        tableau.count(Card.WHEAT_FIELD), tableau2.count(Card.WHEAT_FIELD))
+    tableau2.money(12)
+    assert_equals(tableau2.money(), 14)
+    tableau2.remove(Card.WHEAT_FIELD)
+    assert_equals(tableau2.count(Card.WHEAT_FIELD), 1)
+    assert_equals(tableau.money(), 2)
+    assert_equals(tableau.count(Card.WHEAT_FIELD), 2)
+    assert_not_equals(tableau.money(), tableau2.money())
+    assert_not_equals(
+        tableau.count(Card.WHEAT_FIELD), tableau2.count(Card.WHEAT_FIELD))

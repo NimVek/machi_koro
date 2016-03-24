@@ -23,3 +23,7 @@ class RandomPlayer(PlayerInterface):
             return random.choice(answers)
         else:
             raise NotImplementedError(card)
+
+#class AdvancePlayer(RandomPlayer):
+#    def decide(self, card, game, answers=None):
+#	if card == Card.
