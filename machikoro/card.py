@@ -140,6 +140,9 @@ class Card(Enum):
         [10])
     SANTAS_WORKSHOP = (
         CardExpansion.PROMOTION, CardType.LANDMARK, CardSymbol.LANDMARK, 0)
+    DIAMINE = (
+        CardExpansion.PROMOTION, CardType.PRIMARY_INDUSTRY, CardSymbol.GEAR, 6,
+        [9], GeneralIncome(5))
     # yapf: enable
 
     def __init__(self,
@@ -148,7 +151,7 @@ class Card(Enum):
                  symbol,
                  cost,
                  activation=None,
-                 effect=NotImplementedEffect):
+                 effect=NotImplementedEffect()):
         self.expansion = expansion
         self.type = type
         self.symbol = symbol
