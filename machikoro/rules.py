@@ -45,7 +45,6 @@ class Rules(object):
 
         @staticmethod
         def earn_income(game):
-            game.money(Game.CURRENT_PLAYER, 10)
             """ red (neighbors) counterclock """
             for player in game.neighbors(Game.CURRENT_PLAYER):
                 Rules.Phase.__earn_income(game, player, CardType.RESTAURANT)

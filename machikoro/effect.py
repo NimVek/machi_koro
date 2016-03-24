@@ -2,6 +2,11 @@
 
 from abc import ABCMeta, abstractmethod
 
+from .constant import CardSymbol, CardType
+
+#from .card import Card
+import machikoro.card
+
 
 class EffectInterface(metaclass=ABCMeta):
     @abstractmethod
@@ -21,4 +26,13 @@ class GeneralIncome(EffectInterface):
         self.required = required
 
     def __call__(self, card, owner, game):
-        pass
+        if not self.required or game.list(owner, required):
+            value = self.base
+            if self.multiply:
+                value *= game.count(owner, self.multiply)
+            if card in [CardSymbol.CUP, CardSymbol.SHOP] and game.list(
+                    owner, machikoro.card.Card.SHOPPING_MALL):
+                value += 1
+            if card == CardType.RED:
+                value = game.money(Game.CURRENT_PLAYER, -value)
+            game.money(owner, value)
