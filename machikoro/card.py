@@ -158,5 +158,5 @@ class Card(CardInterface):
         self.cost = cost
         self.activation = activation
         self.effect = effect
-        print(dir(self))
-#        super().__init__(expansion, type_, symbol, cost, activation, effect)
+#        super(cls.__class__, self).__init__(expansion, type_, symbol, cost,
+#                                            activation, effect)

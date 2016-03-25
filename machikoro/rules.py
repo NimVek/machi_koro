@@ -40,7 +40,6 @@ class Rules(object):
             for card in game.list(owner, ['&', card_type,
                                           game.pip(Game.DICE_GAME)]):
                 for _ in range(game.count(owner, card)):
-                    print(card.effect)
                     card.effect(card, owner, game)
 
         @staticmethod
