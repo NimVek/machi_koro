@@ -6,6 +6,7 @@ This module contains the constants
 from enum import Enum
 
 CURRENT_PLAYER = 'current'
+DICE_GAME = 'game'
 
 
 class CardExpansion(Enum):

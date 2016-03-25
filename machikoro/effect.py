@@ -1,17 +1,9 @@
 #!/usr/bin/env python
 
-from abc import ABCMeta, abstractmethod
-
 from .constant import CardSymbol, CardType, CURRENT_PLAYER
+from .interface import EffectInterface
 
-#from .card import Card
 import machikoro.card
-
-
-class EffectInterface(metaclass=ABCMeta):
-    @abstractmethod
-    def __call__(self, card, owner, game):
-        pass
 
 
 class NotImplementedEffect(EffectInterface):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from .player import PlayerInterface
+from .interface import PlayerInterface
 from .container import Tableau
 
 import random
@@ -80,8 +80,11 @@ class Game(object):
     def roll(self, target=DICE_GAME, count_=1):
         self.dices[target] = Game.__roll(count_)
 
-    def dice(self, target=DICE_GAME):
-        return self.dices[target]
+    def dice(self, target=DICE_GAME, value=None):
+        if value:
+            self.dices[target] = value
+        else:
+            return self.dices[target]
 
     def pip(self, target=DICE_GAME):
         return sum(self.dice(target))

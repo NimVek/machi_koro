@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-from enum import Enum
 from .constant import CardExpansion, CardType, CardSymbol
+from .interface import CardInterface
 from .effect import NotImplementedEffect, GeneralIncome, StadiumEffect, TVStationEffect, BusinessCentreEffect
 
 
-class Card(Enum):
+class Card(CardInterface):
     # yapf: disable
     WHEAT_FIELD = (
         CardExpansion.BASE, CardType.PRIMARY_INDUSTRY, CardSymbol.GRAIN, 1,
@@ -147,42 +147,16 @@ class Card(Enum):
 
     def __init__(self,
                  expansion,
-                 type,
+                 type_,
                  symbol,
                  cost,
                  activation=None,
                  effect=NotImplementedEffect()):
         self.expansion = expansion
-        self.type = type
+        self.type = type_
         self.symbol = symbol
         self.cost = cost
         self.activation = activation
         self.effect = effect
-
-    def __eq__(self, other):
-        if isinstance(other, CardExpansion):
-            return self.expansion == other
-        elif isinstance(other, CardType):
-            return self.type == other
-        elif isinstance(other, CardSymbol):
-            return self.symbol == other
-        elif isinstance(other, list):
-            if other[0] == '!':
-                return self != other[1]
-            elif other[0] == '|':
-                return self in other[1:]
-            elif other[0] == '&':
-                return not False in [self == x for x in other[1:]]
-            else:
-                return NotImplemented
-        elif isinstance(other, int):
-            return self.activation and other in self.activation
-        else:
-            return other is self
-
-    def __hash__(self):
-        return hash(self._name_)
-
-    def __deepcopy__(self, memo={}):
-        memo[id(self)] = self
-        return self
+        print(dir(self))
+#        super().__init__(expansion, type_, symbol, cost, activation, effect)

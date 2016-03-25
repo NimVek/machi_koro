@@ -1,17 +1,12 @@
 #!/usr/bin/env python
 
-from abc import ABCMeta, abstractmethod
 import random
+from copy import deepcopy
 
-
-class PlayerInterface(metaclass=ABCMeta):
-    @abstractmethod
-    def build(self, game, cards):
-        pass
-
-    @abstractmethod
-    def decide(self, card, game, answers=None):
-        pass
+from .card import Card
+from .constant import DICE_GAME
+from .interface import PlayerInterface
+from .rules import Rules
 
 
 class RandomPlayer(PlayerInterface):
@@ -24,6 +19,14 @@ class RandomPlayer(PlayerInterface):
         else:
             raise NotImplementedError(card)
 
-#class AdvancePlayer(RandomPlayer):
-#    def decide(self, card, game, answers=None):
-#	if card == Card.
+
+class AdvancedPlayer(RandomPlayer):
+    def decide(self, card, game, answers=None):
+        if card == Card.STATION:
+            for i in range(1, 15):
+                test = deepcopy(game)
+                test.dices(DICE_GAME, {i})
+                Rules.Phase.earn_income(test)
+            raise NotImplementedError(card)
+        else:
+            return super(AdvancedPlayer, self).decide(card, game, answers)
