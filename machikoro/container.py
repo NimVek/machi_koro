@@ -4,8 +4,6 @@ from .constant import CardExpansion, CardType, CardSymbol
 from .card import Card
 from .interface import ContainerInterface
 
-import random
-
 
 class UnlimitedSupply(ContainerInterface):
     def __init__(self,
@@ -36,10 +34,10 @@ class LimitedSupply(ContainerInterface):
         self.cards = {}
         for card in cards:
             if card == CardSymbol.LANDMARK:
-                for i in range(player_count):
+                for _ in range(player_count):
                     self.add(card)
             else:
-                for i in range(stock_count):
+                for _ in range(stock_count):
                     self.add(card)
 
     def _list(self):
