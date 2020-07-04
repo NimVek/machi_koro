@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from .constant import CardSymbol, CardType, CURRENT_PLAYER
-from .interface import EffectInterface
-
 import machikoro.card
+
+from .constant import CURRENT_PLAYER, CardSymbol, CardType
+from .interface import EffectInterface
 
 
 class NotImplementedEffect(EffectInterface):
@@ -23,7 +23,8 @@ class GeneralIncome(EffectInterface):
             if self.multiply:
                 value *= game.count(owner, self.multiply)
             if card in [CardSymbol.CUP, CardSymbol.SHOP] and game.list(
-                    owner, machikoro.card.Card.SHOPPING_MALL):
+                owner, machikoro.card.Card.SHOPPING_MALL
+            ):
                 value += 1
             if card == CardType.RED:
                 value = game.money(CURRENT_PLAYER, -value)

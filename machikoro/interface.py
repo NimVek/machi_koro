@@ -1,16 +1,21 @@
 #!/usr/bin/env python
 
-from .constant import CardExpansion, CardType, CardSymbol
+import random
 
 from abc import ABCMeta, abstractmethod
 from enum import Enum
-import random
+
+from .constant import CardExpansion, CardSymbol, CardType
 
 
 class CardInterface(Enum):
-    @abstractmethod
-    def __init__(self, expansion, type, symbol, cost, activation, effect):
-        pass
+    def __init__(self, expansion, type_, symbol, cost, activation, effect):
+        self.expansion = expansion
+        self.type = type_
+        self.symbol = symbol
+        self.cost = cost
+        self.activation = activation
+        self.effect = effect
 
     def __eq__(self, other):
         if isinstance(other, CardExpansion):
@@ -20,12 +25,12 @@ class CardInterface(Enum):
         elif isinstance(other, CardSymbol):
             return self.symbol == other
         elif isinstance(other, list):
-            if other[0] == '!':
+            if other[0] == "!":
                 return self != other[1]
-            elif other[0] == '|':
+            elif other[0] == "|":
                 return self in other[1:]
-            elif other[0] == '&':
-                return not False in [self == x for x in other[1:]]
+            elif other[0] == "&":
+                return False not in [self == x for x in other[1:]]
             else:
                 return NotImplemented
         elif isinstance(other, int):
@@ -57,7 +62,7 @@ class ContainerInterface(metaclass=ABCMeta):
 
     def list(self, attributes=None):
         result = self._list()
-        if not attributes is None:
+        if attributes is not None:
             result = [card for card in result if card == attributes]
         return result
 

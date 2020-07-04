@@ -1,7 +1,15 @@
-from nose.tools import *
-
-from machikoro import *
-from machikoro.effect import *
+from machikoro.card import Card
+from machikoro.constant import CardSymbol
+from machikoro.container import UnlimitedSupply
+from machikoro.effect import (
+    GeneralIncome,
+    NotImplementedEffect,
+    StadiumEffect,
+    TVStationEffect,
+)
+from machikoro.game import Game
+from machikoro.player import RandomPlayer
+from nose.tools import assert_equal, assert_raises
 
 
 def test_not_implemented():

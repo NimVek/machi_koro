@@ -1,7 +1,9 @@
-from nose.tools import *
-
-from machikoro import *
 import copy
+
+from machikoro.container import UnlimitedSupply
+from machikoro.game import Game
+from machikoro.player import RandomPlayer
+from nose.tools import assert_equal, assert_list_equal
 
 
 def test_game_player():

@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 
-import random
-from copy import deepcopy
 import itertools
+import random
+
+from copy import deepcopy
+from typing import Dict
 
 from .card import Card
-from .constant import DICE_GAME, CardType, CardSymbol
-from .interface import PlayerInterface
+from .constant import DICE_GAME, CardSymbol, CardType
 from .container import LimitedSupply
+from .interface import PlayerInterface
 from .rules import Rules
 
 
@@ -34,7 +36,7 @@ class AdvancedPlayer(RandomPlayer):
 
     def __compute_outcome(self, game):
         earnings = self.__compute_earnings(game)
-        result = {}
+        result: Dict[int, float] = {}
         for i in [1, 2]:
             result[i] = 0
             count_ = 0
@@ -42,13 +44,13 @@ class AdvancedPlayer(RandomPlayer):
                 count_ += 1
                 tmp = sum(dice)
                 if game.list(self, Card.HARBOUR) and tmp >= 10:
-                    ''' Add 2 '''
+                    """ Add 2 """
                     if earnings[tmp] < earnings[tmp + 2]:
                         tmp += 2
                 result[i] += earnings[tmp]
             result[i] /= count_
         if game.list(self, Card.AMUSEMENT_PARK):
-            ''' Additional Turn '''
+            """ Additional Turn """
             result[2] *= 6 / 5
         return result
 
@@ -60,11 +62,11 @@ class AdvancedPlayer(RandomPlayer):
 
     def decide(self, card, game, answers=None):
         if card == Card.STATION:
-            ''' Dice count '''
+            """ Dice count """
             outcome = self.__compute_outcome(game)
             return outcome[2] > outcome[1]
         elif card == Card.RADIO_TOWER:
-            ''' Reroll '''
+            """ Reroll """
             earning = self.__compute_earnings(game)[game.pip(DICE_GAME)]
             outcome = self.__compute_outcome(game)
             dice_count = len(game.dice(DICE_GAME))
@@ -73,7 +75,7 @@ class AdvancedPlayer(RandomPlayer):
                     earning += outcome[dice_count]
             return outcome[dice_count] > earning
         elif card == Card.TV_STATION:
-            ''' Get 5 bucks from opponent '''
+            """ Get 5 bucks from opponent """
             money = -1
             for i in game.opponents(self):
                 if game.money(i) > money:
@@ -85,21 +87,21 @@ class AdvancedPlayer(RandomPlayer):
         elif card == Card.BUSINESS_CENTRE:
             tmp = deepcopy(game)
             tmp.market = LimitedSupply([])
-            while tmp.count(self, ['!', CardSymbol.LANDMARK]) > 0:
-                c = tmp.remove(self, ['!', CardSymbol.LANDMARK])
+            while tmp.count(self, ["!", CardSymbol.LANDMARK]) > 0:
+                c = tmp.remove(self, ["!", CardSymbol.LANDMARK])
                 tmp.money(self, c.cost)
-                tmp.add('market', c)
-            while tmp.count('market') > 1:
-                c = tmp.remove('market', self.build(tmp, tmp.list('market')))
+                tmp.add("market", c)
+            while tmp.count("market") > 1:
+                c = tmp.remove("market", self.build(tmp, tmp.list("market")))
                 tmp.money(self, -c.cost)
                 tmp.add(self, c)
-            own_card = tmp.list('market')[0]
+            own_card = tmp.list("market")[0]
             tmp.market = LimitedSupply([])
             for i in game.opponents(self):
-                for c in tmp.list(i, ['!', CardSymbol.LANDMARK]):
+                for c in tmp.list(i, ["!", CardSymbol.LANDMARK]):
                     for _ in range(tmp.count(i, c)):
-                        tmp.add('market', c)
-            other_card = self.build(tmp, tmp.list('market'))
+                        tmp.add("market", c)
+            other_card = self.build(tmp, tmp.list("market"))
             count_ = -1
             for i in game.opponents(self):
                 if tmp.count(i, other_card) > count_:

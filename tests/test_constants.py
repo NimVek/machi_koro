@@ -1,6 +1,5 @@
-from nose.tools import *
-
-from machikoro.constant import *
+from machikoro.constant import CardExpansion, CardSymbol, CardType
+from nose.tools import assert_equals, assert_not_equals
 
 
 def test_colors():

@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
-from .interface import PlayerInterface
-from .container import Tableau
-
 import random
+
+from .container import Tableau
+from .interface import PlayerInterface
 
 
 class Game(object):
-    CURRENT_PLAYER = 'current'
-    MARKET = 'market'
-    DICE_GAME = 'game'
+    CURRENT_PLAYER = "current"
+    MARKET = "market"
+    DICE_GAME = "game"
 
     def __init__(self, players, market):
         self._players = list(players)
@@ -67,7 +67,7 @@ class Game(object):
     def opponents(self, player=CURRENT_PLAYER):
         player = self.player(player)
         i = self._players.index(player)
-        result = self._players[i + 1:] + self._players[:i]
+        result = self._players[i + 1 :] + self._players[:i]  # noqa: E203
         return list(reversed(result))
 
     def neighbors(self, player=CURRENT_PLAYER):

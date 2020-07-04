@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
-from .constant import CardExpansion, CardType, CardSymbol
-from .card import Card
+from .card import BASEDECK, Card
+from .constant import CardSymbol, CardType
 from .interface import ContainerInterface
 
 
 class UnlimitedSupply(ContainerInterface):
-    def __init__(self,
-                 cards=[card for card in Card if card == CardExpansion.BASE]):
+    def __init__(self, cards=BASEDECK):
         self.cards = []
         for card in cards:
             self.add(card)
@@ -22,15 +21,14 @@ class UnlimitedSupply(ContainerInterface):
         return card if card in self.cards else None
 
     def _add(self, card):
-        if not card in self.cards:
+        if card not in self.cards:
             self.cards.append(card)
 
 
 class LimitedSupply(ContainerInterface):
-    def __init__(self,
-                 cards=[card for card in Card if card == CardExpansion.BASE],
-                 player_count=4,
-                 stock_count=6):
+    def __init__(
+        self, cards=BASEDECK, player_count=4, stock_count=6,
+    ):
         self.cards = {}
         for card in cards:
             if card == CardSymbol.LANDMARK:
@@ -55,10 +53,15 @@ class LimitedSupply(ContainerInterface):
 
 
 class TilesMarket(ContainerInterface):
-    def __init__(self,
-                 supply,
-                 tiles=[[2, CardType.MAJOR_ESTABLISHMENT],
-                        [4, ['|', 1, 2, 3, 4, 5, 6]], [4, None]]):
+    def __init__(
+        self,
+        supply,
+        tiles=[
+            [2, CardType.MAJOR_ESTABLISHMENT],
+            [4, ["|", 1, 2, 3, 4, 5, 6]],
+            [4, None],
+        ],
+    ):
         self.supply = supply
         self.tiles = [x + [LimitedSupply([])] for x in tiles]
         self.__assure_tiles()
@@ -99,21 +102,21 @@ class TilesMarket(ContainerInterface):
                     break
 
     def __assure_tiles(self):
-        remains = self.supply.list(['!', CardType.LANDMARK])
+        remains = self.supply.list(["!", CardType.LANDMARK])
         for count_, selector, tile in self.tiles:
             if selector:
                 using = [card for card in remains if card == selector]
-                remains = [card for card in remains if not card in using]
+                remains = [card for card in remains if card not in using]
             else:
                 using = remains
                 remains = []
             while using and (len(tile._list()) < count_):
-                self.add(self.supply.remove(['|'] + list(using)))
-                using = self.supply.list(['|'] + list(using))
+                self.add(self.supply.remove(["|"] + list(using)))
+                using = self.supply.list(["|"] + list(using))
 
 
 class Tableau(ContainerInterface):
-    __ATTRIBUTE_COUNT = 'count'
+    __ATTRIBUTE_COUNT = "count"
 
     def __init__(self, money=3, cards=[Card.WHEAT_FIELD, Card.BAKERY]):
         self._money = money
