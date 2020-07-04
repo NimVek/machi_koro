@@ -1,13 +1,35 @@
 language: python
-sudo: false
+dist: focal
 python:
   - "3.6"
   - "3.8"
-cache: pip
-install:
-  - pip install -r requirements.txt
-  - pip install coveralls
-script:
-  nosetests --verbose --with-coverage --cover-package=machikoro tests
+
+cache:
+  pip: true
+  directories:
+    - $HOME/.cache/pypoetry
+    - $HOME/.cache/pre-commit
+
+
+stages:
+  - lint
+  - test
+
+jobs:
+  include:
+    - stage: lint
+      install:
+        - pip install pre-commit
+        - pre-commit install-hooks
+      script:
+        - pre-commit run --all-files
+    - stage: test
+      install:
+        - pip install --upgrade pip
+        - pip install poetry
+        - poetry install --verbose
+      script:
+        - pytest --verbose --cov=src
+
 after_success:
   coveralls
