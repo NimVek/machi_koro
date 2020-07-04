@@ -28,6 +28,5 @@ jobs:
         - poetry install --verbose
       script:
         - pytest --verbose --cov=src
-
-after_success:
-  coveralls
+      after_success:
+        - coveralls
